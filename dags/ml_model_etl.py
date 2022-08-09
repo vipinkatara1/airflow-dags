@@ -357,7 +357,7 @@ def reqiuiredModule():
 # implement pip as a subprocess:
 
 
-def extract(**kwargs):
+def extract():
     # SHOPID = "5c3c4c07febd2d0001c433f4" # kwargs.get('SHOPID')
     # connection_url = "mongodb://localhost:27017/" # kwargs.get('connection_url')
     # client = MongoClient(connection_url)
@@ -376,8 +376,7 @@ def extract(**kwargs):
     # print("\n--------------------------------------------------------------\n")
     # print(df)
     # print("\n--------------------------------------------------------------\n")
-    reqiuiredModule()
-    df = pd.read_pickle("../data/df.pkl")
+    df = pd.read_pickle("/home/subhayu/Downloads/Learning_Apache_ASK/Airflow/data/df2.pkl")
     df.to_pickle('data.pkl')
 
 
@@ -389,7 +388,7 @@ def preprocess():
     df['Week_no'] = df['createdAt'].dt.isocalendar().week
     df['hours'] = df['createdAt'].dt.hour
     df['Months'] = df['createdAt'].dt.month_name()
-    df[df['status'] != 'DENIED']
+    # df[df['status'] != 'DENIED']
     df['isComment'] = df['comment'].isnull()
     df["isAddon"] = getisAddon(df)
     delete = removeIndex(df)
@@ -487,7 +486,7 @@ def send_mail(**context):
     pass
 
 with DAG(
-    dag_id="ml_model_train_etl",
+    dag_id="ml_model_etl",
     schedule_interval="@daily",
     default_args={
         "owner": "airflow",
@@ -496,21 +495,16 @@ with DAG(
         "start_date": datetime.datetime(2022, 6, 25)
     },
     catchup=False,
-    tags=['mongodb', 'ml', 'etl']) as f:
+    tags=['ml', 'etl']) as f:
 
     extract_data = PythonOperator(
         task_id="extract_data",
         python_callable=extract,
-        op_kwargs={
-            "SHOP_ID": "5c3c4c07febd2d0001c433f4",
-            "connection_url": "mongodb://localhost:27017/"
-        }
     )
 
     preprocess_data = PythonOperator(
         task_id="preprocess_data",
         python_callable=preprocess,
-        depends_on_past=True
     )
 
     train_model_xg = PythonOperator(
