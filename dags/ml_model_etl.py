@@ -332,26 +332,40 @@ def mse(regr, x_test, y_test):
     mse1 = mean_squared_error(y_test, testPredict)
     return mse1
 
+def reqiuiredModule():
+    import sys
+    import subprocess
+
+    try:
+        import sklearn
+    except ImportError:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install','sklearn'])
+
+# implement pip as a subprocess:
+
 
 def extract(**kwargs):
-    SHOPID = "5c3c4c07febd2d0001c433f4" # kwargs.get('SHOPID')
-    connection_url = "mongodb://localhost:27017/" # kwargs.get('connection_url')
-    client = MongoClient(connection_url)
-    db = client['qopla']
-    collection = db['kitchenOrder']
-    sDay, sMonth, sYear = 18, 4, 2020
-    eDay, eMonth, eYear = 30, 4, 2020
-    start = datetime.datetime(sYear, sMonth, sDay, 0, 0, 0, 0)
-    end = datetime.datetime(eYear, eMonth, eDay, 23, 59, 59, 381)
+    # SHOPID = "5c3c4c07febd2d0001c433f4" # kwargs.get('SHOPID')
+    # connection_url = "mongodb://localhost:27017/" # kwargs.get('connection_url')
+    # client = MongoClient(connection_url)
+    # db = client['qopla']
+    # collection = db['kitchenOrder']
+    # sDay, sMonth, sYear = 18, 4, 2020
+    # eDay, eMonth, eYear = 30, 4, 2020
+    # start = datetime.datetime(sYear, sMonth, sDay, 0, 0, 0, 0)
+    # end = datetime.datetime(eYear, eMonth, eDay, 23, 59, 59, 381)
 
-    data = collection.find(
-        {'createdAt': {'$gte': start, '$lt': end}, "shopId": SHOPID})
-    data = list(data)
-    df = pd.DataFrame(data)
-    df.to_pickle("data.pkl")
-    print("\n--------------------------------------------------------------\n")
-    print(df)
-    print("\n--------------------------------------------------------------\n")
+    # data = collection.find(
+    #     {'createdAt': {'$gte': start, '$lt': end}, "shopId": SHOPID})
+    # data = list(data)
+    # df = pd.DataFrame(data)
+    # df.to_pickle("data.pkl")
+    # print("\n--------------------------------------------------------------\n")
+    # print(df)
+    # print("\n--------------------------------------------------------------\n")
+    reqiuiredModule()
+    df = pd.read_pickle("../data/df.pkl")
+    df.to_pickle('data.pkl')
 
 
 def preprocess():
