@@ -1,3 +1,16 @@
+import sys
+import importlib	
+import subprocess
+def reqiuiredModule(lib):
+    try:
+        importlib.import_module(lib)
+    except ImportError:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
+reqiuiredModule("sklearn")
+reqiuiredModule("xgboost")
+reqiuiredModule("sendgrid")
+reqiuiredModule("pandas")
+reqiuiredModule("numpy")
 # necessary libraries
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
