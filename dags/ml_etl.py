@@ -4,20 +4,19 @@ import subprocess
 from subprocess import STDOUT, check_call
 import os
 import subprocess
-bashCommand = "apt install -y libgomp1"
-process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-output, error = process.communicate()
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
+reqiuiredModule("lightgbm")
 reqiuiredModule("bson")
 reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
+
 # necessary libraries
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
