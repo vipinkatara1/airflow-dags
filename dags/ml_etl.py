@@ -4,7 +4,7 @@ import subprocess
 from subprocess import STDOUT, check_call
 import os
 import subprocess
-bashCommand = "apt install -y gcc"
+bashCommand = "apt install -y libgomp1"
 process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
 def reqiuiredModule(lib):
