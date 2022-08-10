@@ -655,7 +655,7 @@ def _choose_best_model(ti):
         res = 'accurate'
     else:
         res = 'inaccurate'
-    with open("output.log", w) as f:
+    with open("output.log", "w") as f:
         f.write(res)
     return res
 
