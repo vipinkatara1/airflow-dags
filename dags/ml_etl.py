@@ -1,6 +1,11 @@
 import sys
 import importlib	
 import subprocess
+from subprocess import STDOUT, check_call
+import os
+check_call(['apt-get', 'install', '-y', 'gcc'],
+     stdout=open(os.devnull,'wb'), stderr=STDOUT) 
+
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
