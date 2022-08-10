@@ -8,7 +8,7 @@ def reqiuiredModule(lib):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
 reqiuiredModule("bson")
-# reqiuiredModule("xgboost")
+# reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
@@ -20,7 +20,7 @@ import datetime
 import pandas as pd
 #import autosklearn.regression
 #from pymongo import MongoClient
-# from xgboost import XGBRegressor
+# from xgboost import XGBRegressor # TODO: need to turn it on
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -431,7 +431,7 @@ def train_xg(**context):
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
     print(x_train, y_train)
-    regr = train_xg_boost(x_train, y_train, x_test, y_test)
+    regr = train_random_forest(x_train, y_train, x_test, y_test) # TODO: need to change it to xg_boost
     resMse = mse(regr, x_test, y_test)
     context['ti'].xcom_push(key='xg_mse', value=resMse)
     print("\n--------------------------------------------------------------\n")
@@ -510,7 +510,7 @@ with DAG(
 
     train_model_xg = PythonOperator(
         task_id="train_model_xg",
-        python_callable=train_rf,
+        python_callable=train_xg,
     )
 
     train_model_rf = PythonOperator(
