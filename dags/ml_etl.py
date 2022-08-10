@@ -4,6 +4,8 @@ import subprocess
 from subprocess import STDOUT, check_call
 import os
 import subprocess
+proc = subprocess.Popen('apt-get install -y libgomp1', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+proc.wait()
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
