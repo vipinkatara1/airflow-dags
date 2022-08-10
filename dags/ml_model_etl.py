@@ -376,7 +376,7 @@ def extract():
     # print("\n--------------------------------------------------------------\n")
     # print(df)
     # print("\n--------------------------------------------------------------\n")
-    df = pd.read_pickle("../data/df2.pkl")
+    df = pd.read_pickle("/opt/airflow/dags/repo/data/df.pkl")
     df.to_pickle('data.pkl')
 
 
