@@ -652,8 +652,12 @@ def _choose_best_model(ti):
     ])
     best_accuracy = max(accuracies)
     if (best_accuracy > 8):
-        return 'accurate'
-    return 'inaccurate'
+        res = 'accurate'
+    else:
+        res = 'inaccurate'
+    with open("output.log", w) as f:
+        f.write(res)
+    return res
 
 
 def _training_model():
@@ -684,12 +688,12 @@ with DAG("my_dag", start_date=datetime(2021, 1, 1),
 
         accurate = BashOperator(
             task_id="accurate",
-            bash_command="echo 'accurate'"
+            bash_command="echo 'accurate' | tee out.log"
         )
 
         inaccurate = BashOperator(
             task_id="inaccurate",
-            bash_command="echo 'inaccurate'"
+            bash_command="echo 'inaccurate' | tee out.log"
         )
 
         [training_model_A, training_model_B, training_model_C] >> choose_best_model >> [accurate, inaccurate]
