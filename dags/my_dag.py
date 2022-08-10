@@ -20,6 +20,11 @@ def _choose_best_model(ti):
         f.write(res)
     return res
 
+def _read_file():
+    with open("output.log", "r") as f:
+        x = f.read(res)
+    print(x)
+
 
 def _training_model():
     return randint(1, 10)
@@ -45,6 +50,11 @@ with DAG("my_dag", start_date=datetime(2021, 1, 1),
         choose_best_model = BranchPythonOperator(
             task_id="choose_best_model",
             python_callable=_choose_best_model
+        )
+       
+        read_file = PythonOperator(
+            task_id="read_file",
+            python_callable=_read_file
         )
 
         accurate = BashOperator(
@@ -77,5 +87,5 @@ with DAG("my_dag", start_date=datetime(2021, 1, 1),
             bash_command="sleep 60"
         )
 
-        [training_model_A, training_model_B, training_model_C] >> choose_best_model >> [accurate, inaccurate]
+        [training_model_A, training_model_B, training_model_C] >> choose_best_model >> [accurate, inaccurate] >> read_file
         pwd >> [file1, file2] >> sleep
