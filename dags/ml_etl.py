@@ -4,10 +4,9 @@ import subprocess
 from subprocess import STDOUT, check_call
 import os
 import subprocess
-proc = subprocess.Popen('apt-get install -y update', shell=True, stdin=None, stdout=open(os.devnull,"wb"), stderr=STDOUT, executable="/bin/bash")
-proc.wait()
-proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open(os.devnull,"wb"), stderr=STDOUT, executable="/bin/bash")
-proc.wait()
+bashCommand = "apt install -y gcc"
+process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+output, error = process.communicate()
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
