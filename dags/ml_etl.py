@@ -8,7 +8,7 @@ proc = subprocess.Popen('apt-get -y update', shell=True, stdin=None, stdout=open
 proc.wait()
 proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
 proc.wait()
-proc = subprocess.Popen('apt-get install -y libgomp1', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+proc = subprocess.Popen('apt-get install -y libgomp', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
 proc.wait()
 def reqiuiredModule(lib):
     try:
