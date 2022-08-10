@@ -16,6 +16,7 @@ def reqiuiredModule(lib):
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
+reqiuiredModule("gcc7")
 reqiuiredModule("bson")
 reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
