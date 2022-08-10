@@ -64,12 +64,12 @@ with DAG("my_dag", start_date=datetime(2021, 1, 1),
         
         file1 = BashOperator(
             task_id="file1",
-            bash_command="touch file1.txt"
+            bash_command="touch ./file1.txt"
         )
         
         file2 = BashOperator(
             task_id="file2",
-            bash_command="touch file2.txt"
+            bash_command="touch /opt/airflow/file2.txt"
         )
         
         sleep = BashOperator(
