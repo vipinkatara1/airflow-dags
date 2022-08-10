@@ -7,7 +7,7 @@ def reqiuiredModule(lib):
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
-reqiuiredModule("xgboost")
+# reqiuiredModule("xgboost")
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
@@ -19,7 +19,7 @@ import datetime
 import pandas as pd
 #import autosklearn.regression
 #from pymongo import MongoClient
-from xgboost import XGBRegressor
+# from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -509,7 +509,7 @@ with DAG(
 
     train_model_xg = PythonOperator(
         task_id="train_model_xg",
-        python_callable=train_xg,
+        python_callable=train_rf,
     )
 
     train_model_rf = PythonOperator(
