@@ -8,14 +8,12 @@ def reqiuiredModule(lib):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
 reqiuiredModule("xgboost")
-reqiuiredModule("pickle5")
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
 # necessary libraries
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
-import pickle5 as pickle
 import re
 import datetime
 import pandas as pd
@@ -374,20 +372,16 @@ def extract():
     #     {'createdAt': {'$gte': start, '$lt': end}, "shopId": SHOPID})
     # data = list(data)
     # df = pd.DataFrame(data)
-    # with open("data.pkl", "wb") as f:
-    #     pickle.dump(df, f)
+    # df.to_pickle("data.pkl")
     # print("\n--------------------------------------------------------------\n")
     # print(df)
     # print("\n--------------------------------------------------------------\n")
-    with open("/opt/airflow/dags/repo/data/df.pkl", "rb") as f:
-        df = pickle.load(f)
-    with open('/opt/airflow/dags/repo/data/data.pkl', "wb") as f:
-        pickle.dump(df, f)
+    df = pd.read_pickle("/opt/airflow/dags/repo/data/df.pkl")
+    df.to_pickle('/opt/airflow/dags/repo/data/data.pkl')
 
 
 def preprocess():
-    with open("/opt/airflow/dags/repo/data/data.pkl", "rb") as f:
-        df = pickle.load(f)
+    df = pd.read_pickle("/opt/airflow/dags/repo/data/data.pkl")
     df['createdAt'] = df['createdAt'].astype('datetime64[ns]')
     df['Date_'] = df['createdAt'].dt.strftime('%Y-%m-%d')
     df['Days'] = df['createdAt'].dt.day_name()
@@ -420,10 +414,8 @@ def preprocess():
     col = getRemoveColumns(df)
     df1 = encoding(df, col)
     X, Y = split(df1)
-    with open("/opt/airflow/dags/repo/data/X.pkl", "wb") as f:
-        pickle.dump(X, f)
-    with open("/opt/airflow/dags/repo/data/Y.pkl", "wb") as f:
-        pickle.dump(Y, f)
+    X.to_pickle("/opt/airflow/dags/repo/data/X.pkl")
+    Y.to_pickle("/opt/airflow/dags/repo/data/Y.pkl")
     print("\n--------------------------------------------------------------\n")
     print(X)
     print("\n--------------------------------------------------------------\n")
@@ -432,10 +424,8 @@ def preprocess():
 
 
 def train_xg(**context):
-    with open("/opt/airflow/dags/repo/data/X.pkl", "rb") as f:
-        X = pickle.load(f)
-    with open("/opt/airflow/dags/repo/data/Y.pkl", "rb") as f:
-        Y = pickle.load(f)
+    X = pd.read_pickle("/opt/airflow/dags/repo/data/X.pkl")
+    Y = pd.read_pickle("/opt/airflow/dags/repo/data/Y.pkl")
     X = X.drop(["Date_"], axis=1)
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
@@ -449,10 +439,8 @@ def train_xg(**context):
 
 
 def train_rf(**context):
-    with open("/opt/airflow/dags/repo/data/X.pkl", "rb") as f:
-        X = pickle.load(f)
-    with open("/opt/airflow/dags/repo/data/Y.pkl", "rb") as f:
-        Y = pickle.load(f)
+    X = pd.read_pickle("/opt/airflow/dags/repo/data/X.pkl")
+    Y = pd.read_pickle("/opt/airflow/dags/repo/data/Y.pkl")
     X = X.drop(["Date_"], axis=1)
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
