@@ -3,6 +3,11 @@ import importlib
 import subprocess
 from subprocess import STDOUT, check_call
 import os
+from subprocess import STDOUT, check_call
+import os
+check_call(['apt-get', 'install', '-y', 'update'],
+     stdout=open(os.devnull,'wb'), stderr=STDOUT) 
+
 check_call(['apt-get', 'install', '-y', 'gcc'],
      stdout=open(os.devnull,'wb'), stderr=STDOUT) 
 
