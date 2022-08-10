@@ -7,7 +7,7 @@ def reqiuiredModule(lib):
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
-#reqiuiredModule("xgboost")
+reqiuiredModule("xgboost")
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
