@@ -1,5 +1,4 @@
 import sys
-import pickle
 import importlib	
 import subprocess
 def reqiuiredModule(lib):
@@ -9,12 +8,14 @@ def reqiuiredModule(lib):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
 reqiuiredModule("xgboost")
+reqiuiredModule("pickle5")
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
 # necessary libraries
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
+import pickle5 as pickle
 import re
 import datetime
 import pandas as pd
