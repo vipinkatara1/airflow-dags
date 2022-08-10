@@ -3,14 +3,11 @@ import importlib
 import subprocess
 from subprocess import STDOUT, check_call
 import os
-from subprocess import STDOUT, check_call
-import os
-check_call(['apt-get', 'install', '-y', 'update'],
-     stdout=open(os.devnull,'wb'), stderr=STDOUT) 
-
-check_call(['apt-get', 'install', '-y', 'gcc'],
-     stdout=open(os.devnull,'wb'), stderr=STDOUT) 
-
+import subprocess
+proc = subprocess.Popen('apt-get install -y update', shell=True, stdin=None, stdout=open(os.devnull,"wb"), stderr=STDOUT, executable="/bin/bash")
+proc.wait()
+proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open(os.devnull,"wb"), stderr=STDOUT, executable="/bin/bash")
+proc.wait()
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
