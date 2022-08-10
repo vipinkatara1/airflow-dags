@@ -695,5 +695,16 @@ with DAG("my_dag", start_date=datetime(2021, 1, 1),
             task_id="inaccurate",
             bash_command="echo 'inaccurate' | tee out.log"
         )
+        
+        pwd = BashOperator(
+            task_id="pwd",
+            bash_command="pwd"
+        )
+        
+        ls = BashOperator(
+            task_id="ls",
+            bash_command="ls"
+        )
 
         [training_model_A, training_model_B, training_model_C] >> choose_best_model >> [accurate, inaccurate]
+        pwd >> ls
