@@ -378,11 +378,11 @@ def extract():
     # print(df)
     # print("\n--------------------------------------------------------------\n")
     df = pd.read_pickle("/opt/airflow/dags/repo/data/df.pkl")
-    df.to_pickle('/opt/airflow/dags/repo/data/data.pkl')
+    df.to_pickle('/home/airflow/data.pkl')
 
 
 def preprocess():
-    df = pd.read_pickle("/opt/airflow/dags/repo/data/data.pkl")
+    df = pd.read_pickle("/home/airflow/data.pkl")
     df['createdAt'] = df['createdAt'].astype('datetime64[ns]')
     df['Date_'] = df['createdAt'].dt.strftime('%Y-%m-%d')
     df['Days'] = df['createdAt'].dt.day_name()
@@ -415,8 +415,8 @@ def preprocess():
     col = getRemoveColumns(df)
     df1 = encoding(df, col)
     X, Y = split(df1)
-    X.to_pickle("/opt/airflow/dags/repo/data/X.pkl")
-    Y.to_pickle("/opt/airflow/dags/repo/data/Y.pkl")
+    X.to_pickle("/home/airflow/X.pkl")
+    Y.to_pickle("/home/airflow/Y.pkl")
     print("\n--------------------------------------------------------------\n")
     print(X)
     print("\n--------------------------------------------------------------\n")
@@ -425,8 +425,8 @@ def preprocess():
 
 
 def train_xg(**context):
-    X = pd.read_pickle("/opt/airflow/dags/repo/data/X.pkl")
-    Y = pd.read_pickle("/opt/airflow/dags/repo/data/Y.pkl")
+    X = pd.read_pickle("/home/airflow/X.pkl")
+    Y = pd.read_pickle("/home/airflow/Y.pkl")
     X = X.drop(["Date_"], axis=1)
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
@@ -440,8 +440,8 @@ def train_xg(**context):
 
 
 def train_rf(**context):
-    X = pd.read_pickle("/opt/airflow/dags/repo/data/X.pkl")
-    Y = pd.read_pickle("/opt/airflow/dags/repo/data/Y.pkl")
+    X = pd.read_pickle("/home/airflow/X.pkl")
+    Y = pd.read_pickle("/home/airflow/Y.pkl")
     X = X.drop(["Date_"], axis=1)
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
