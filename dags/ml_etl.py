@@ -15,7 +15,7 @@ def reqiuiredModule(lib):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
 reqiuiredModule("sklearn")
 reqiuiredModule("bson")
-#reqiuiredModule("xgboost") # TODO: need to turn it on
+reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
