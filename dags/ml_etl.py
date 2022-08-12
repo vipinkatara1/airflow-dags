@@ -4,21 +4,22 @@ import subprocess
 from subprocess import STDOUT, check_call
 import os
 import subprocess
-proc = subprocess.Popen('apt-get -y update', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-proc.wait()
-proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-proc.wait()
-proc = subprocess.Popen('apt-get install -y libgomp', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-proc.wait()
+# proc = subprocess.Popen('apt-get -y update', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+# proc.wait()
+# proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+# proc.wait()
+# proc = subprocess.Popen('apt-get install -y libgomp', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+# proc.wait()
 def reqiuiredModule(lib):
     try:
         importlib.import_module(lib)
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
+os.system(f"{sys.executable} -m pip install xgboost")
 reqiuiredModule("sklearn")
 reqiuiredModule("gcc7")
 reqiuiredModule("bson")
-reqiuiredModule("xgboost") # TODO: need to turn it on
+# reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
