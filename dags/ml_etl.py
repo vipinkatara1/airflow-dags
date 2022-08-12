@@ -19,7 +19,7 @@ os.system(f"{sys.executable} -m pip install xgboost")
 reqiuiredModule("sklearn")
 reqiuiredModule("gcc7")
 reqiuiredModule("bson")
-# reqiuiredModule("xgboost") # TODO: need to turn it on
+reqiuiredModule("xgboost") # TODO: need to turn it on
 reqiuiredModule("sendgrid")
 reqiuiredModule("pandas")
 reqiuiredModule("numpy")
