@@ -1,28 +1,7 @@
 import sys
-import importlib	
-import subprocess
-from subprocess import STDOUT, check_call
 import os
-import subprocess
-# proc = subprocess.Popen('apt-get -y update', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-# proc.wait()
-# proc = subprocess.Popen('apt-get install -y gcc', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-# proc.wait()
-# proc = subprocess.Popen('apt-get install -y libgomp', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-# proc.wait()
-def reqiuiredModule(lib):
-    try:
-        importlib.import_module(lib)
-    except ImportError:
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install',lib])
-os.system(f"{sys.executable} -m pip install xgboost")
-reqiuiredModule("sklearn")
-reqiuiredModule("gcc7")
-reqiuiredModule("bson")
-reqiuiredModule("xgboost") # TODO: need to turn it on
-reqiuiredModule("sendgrid")
-reqiuiredModule("pandas")
-reqiuiredModule("numpy")
+
+os.system(f"{sys.executable} -m pip install sklearn gcc7 bson xgboost sendgrid pandas numpy")
 
 # necessary libraries
 from sklearn.feature_extraction.text import CountVectorizer
@@ -32,7 +11,7 @@ import datetime
 import pandas as pd
 #import autosklearn.regression
 #from pymongo import MongoClient
-from xgboost import XGBRegressor # TODO: need to turn it on
+from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -358,17 +337,6 @@ def mse(regr, x_test, y_test):
     mse1 = mean_squared_error(y_test, testPredict)
     return mse1
 
-def reqiuiredModule():
-    import sys
-    import subprocess
-
-    try:
-        import sklearn
-    except ImportError:
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install','sklearn'])
-
-# implement pip as a subprocess:
-
 
 def extract():
     # SHOPID = "5c3c4c07febd2d0001c433f4" # kwargs.get('SHOPID')
@@ -443,7 +411,7 @@ def train_xg(**context):
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
     print(x_train, y_train)
-    regr = train_xg_boost(x_train, y_train, x_test, y_test) # TODO: need to change it to xg_boost
+    regr = train_xg_boost(x_train, y_train, x_test, y_test)
     resMse = mse(regr, x_test, y_test)
     context['ti'].xcom_push(key='xg_mse', value=resMse)
     print("\n--------------------------------------------------------------\n")
