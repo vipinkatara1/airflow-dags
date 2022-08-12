@@ -443,7 +443,7 @@ def train_xg(**context):
     x_train, x_test, y_train, y_test = train_test_split(
         X, Y, test_size=0.2, random_state=0)
     print(x_train, y_train)
-    regr = train_random_forest(x_train, y_train, x_test, y_test) # TODO: need to change it to xg_boost
+    regr = train_xg_boost(x_train, y_train, x_test, y_test) # TODO: need to change it to xg_boost
     resMse = mse(regr, x_test, y_test)
     context['ti'].xcom_push(key='xg_mse', value=resMse)
     print("\n--------------------------------------------------------------\n")
